@@ -60,7 +60,7 @@ SynthDef(\synthOne,
 	}).add;
 
 
-//not sure where I got this kik drum from, maybe an inbult example?
+//not sure where I got this kik drum from, maybe an inbuilt example?
 SynthDef(\kik,{|basefreq=60,ratio=7,sweeptime=0.05,preamp=0.4,amp=1,decay1=0.42,decay1L=0.1,decay2=0.1, pan =0, out=0|
     var    fcurve = EnvGen.kr(Env([basefreq * ratio, basefreq], [sweeptime], \exp)),
         env = EnvGen.kr(Env([1, decay1L, 0], [decay1, decay2], -4), doneAction: 2),
@@ -502,4 +502,3 @@ p.clock= TempoClock.default.tempo_(95/60);
 )
 s.record
 s.stopRecording
-Platform.recordingsDir
