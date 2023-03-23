@@ -48,12 +48,12 @@ s.makeWindow;
 //Ash Sagar synth
 SynthDef(\synthOne,
 	{arg // amp1 amp2 amp3 wna cut rez atk sus rel pan vol
-		out=0, freq=440, amp1=0, amp2=0,amp3=0, wna=0, cut=1000, rez=0.1,  atk=0.1, sus=0.1,rel=0.1,pan=0, vol=0.5;
+		out=0, freq=440, detune1=0.0, amp1=0, amp2=0,amp3=0, wna=0, cut=1000, rez=0.1,  atk=0.1, sus=0.1,rel=0.1,pan=0, vol=0.5;
 
 		var osc1, osc2, osc3, noise, filt, env;
 		osc1 = LFSaw.ar(freq, 0, amp1);
 		osc2 = LFPulse.ar(freq,0, 0.5,amp2 );
-		osc3 = SinOsc.ar(freq,0,amp3);
+		osc3 = SinOsc.ar(freq,0,amp3)+SinOsc.ar(freq+detune1, 0,amp3);
 
 		noise = WhiteNoise.ar(wna);
 
@@ -393,7 +393,6 @@ SynthDef(\noise,
 	\vol, 0.2,
 );
 );
-
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -461,6 +460,63 @@ SynthDef(\noise,
 	\vol, 0.05,
 );
 );
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+(//Beat 07
+//Beat 06
+//basefreq=60,ratio=7,sweeptime=0.05,preamp=0.4,amp=1,decay1=0.42,decay1L=0.1,decay2=0.1, pan =0, out=0|
+~kik_07=Pbind(\instrument, \kik,
+	\dur, 0.25,
+	\basefreq, 40,
+	\ratio, 7,
+	\sweeptime, 0.05,
+	\preamp, 0.4,
+	////////////1 e + a 2 e + a 3 e + a 4 e + a
+	\amp, Pseq([1,0,1,0,0,0,1,1,0,1,1,0,0,1,1,0],2, ),
+	\decay1, 0.5,
+	\decay1L, 0.3,
+	\decay2, 1,
+	\pan, 0,
+	\out, 0,
+);
+
+~sn_07=Pbind(\instrument, \noise,
+	\dur, Pseq([Rest(1), 1, Rest(1), 1],2),
+	\amp1, 0.6,
+	\amp2, 0.3,
+	\cut, 1000,
+	\rez, 0.2,
+	\rez, 0.5,
+	\atk, 0.01,
+	\sus, 0.01,
+	\rel, 0.15,
+	\pan, 0,
+	\vol,Pseq([0, 1, 0, 0.5],2),
+);
+
+// amp1 amp2 amp3 wna cut rez atk sus rel pan vol
+~bazz_07=Pbind(\instrument, \synthOne,
+	\dur, Pseq([0.5, Rest(1),0.5,Rest(1),0.5,Rest(0.5)],2),
+	\midinote, Pseq([57, 57, 55, 55, 51, 51, 48,48, 51,51, 48,48]-12),
+	\detune1, 5,
+	\cut, 1250,
+	\rez, 0.9,
+	\amp1, 0.04,
+	\amp2, 0,
+	\amp3, 1,
+	\wna, 0,
+	\atk, 0.01,
+	\sus, 0.3,
+	\rel, 0.7,
+	\pan, 0,
+	\vol, 0.2,
+);
+
+//p.clock= TempoClock.default.tempo_(95/60);
+
+
+);
 
 );
 );
@@ -502,6 +558,11 @@ p.clock=TempoClock.default.tempo_(90/60);
 (//Beat06
 p.clock= TempoClock.default.tempo_(95/60);
 ~beat_06=Ppar([Pseq([~kik_06]), Pseq([~sn_06]), Pseq([~hat_06]), Pseq([~ride_06])],2).play
+)
+(//Beat_07
+p.clock=TempoClock.default.tempo_(100/60);
+~beat_07=Ppar([Pseq([~kik_07]), Pseq([~sn_07]), Pseq([~bazz_07])],2).play
+
 )
 s.record
 s.stopRecording
