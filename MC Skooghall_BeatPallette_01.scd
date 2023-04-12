@@ -610,7 +610,8 @@ Ppar([Pseq([~kik_07]), Pseq([~sn_07]), Pseq([~bazz_07])],inf);
 //                 Features to add
 // *Visualiser that responds when a loop is pressed
 // *Output meters
-// *Scope
+// *Scope -- Cannot seem to get this to read from the server???
+//
 // * volume faders for parts
 // add in a working quantiser to the Tempo clock so that the loops end on a bar sequence
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -619,9 +620,13 @@ Ppar([Pseq([~kik_07]), Pseq([~sn_07]), Pseq([~bazz_07])],inf);
 var w;
 var id;
 var sz = 123;
-var xfader;
+var width = 1000;
+var height = 1000;
+var win;
+var usr;
+//var win = Window("beat01 viz", Rect(10, 10, width, height), false);
+var xfader, scope, freqScope;
 var beat01, beat02, beat03, beat04, beat05, beat06, beat07, beat08, beat09, beat10;
-
 w = Window("The MC Skooghall Sound n Sight Pallate", Rect(1200, 200, 1280, 720)); //make our gui wndow
 w.view.decorator = FlowLayout(w.view.bounds);
 id = s.nextNodeID;
@@ -643,10 +648,26 @@ beat01.action = {|view|
 		//start loop
 		Ndef(\beat_01).play;
 		p.clock=TempoClock.default.tempo_(80/60);
+		(//open a visualizer whn button pressed
+			{
+				win = Window("beat01 viz", Rect(1080, 10, width, height), false);
+				win.front;
+			usr = UserView(win,Rect(0, 0, width, height));
+			usr.background = Color.rand;
+
+
+			};
+
+
+		)
+
+
+
 	};
 	if(view.value == 0){
 		//stop loop
-		Ndef(\beat_01).free
+		Ndef(\beat_01).free;
+		win=({win.close});
 };
 };
 
@@ -704,6 +725,7 @@ beat04.action = {|view|
 		//start loop
 		Ndef(\beat_04).play;
 		p.clock=TempoClock.default.tempo_(57/60);
+
 	};
 	if(view.value == 0){
 		//stop loop
@@ -829,9 +851,14 @@ beat10.action = {|view|
 
 
 //Add xfade
-xfader=Slider(w, Rect(100, 600, 1100, 40)); // make a crossfader, maybt the slider isnt the right thing for a xfader?????
+xfader=Slider(w, Rect(100, 600, 1100, 40)); // make a crossfader, maybe the slider isnt the right thing for a xfader?????
 xfader.action_({xfader.value.postln};);
 
+
+//Look into this????
+//scope=ScopeView(s);
+//scope
+//freqScope = FreqScopeView(w,Rect(1000, 1000, 700, 400),s);
 
 
 w.front; // make the window appear
