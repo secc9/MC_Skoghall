@@ -20,46 +20,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                 //////////////  //            //   ///////////////////
-//                //          //   //            //   ///////////////////
-//               //          //    //            //           //
-//              //                 //            //           //
-//             //                  //            //           //
-//            //                   //            //           //
-//            //                   //            //           //
-//            //         //////    //            //           //
-//            //             //     //           //           //
-//             //           //       //         //            //
-//              //         //         //       //             //
-//               //       //           //     //     ////////////////////
-//                /////////             ///////      ////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-(
-var w, xfader;
-w = Window("The MC Skooghall Sound n Sight Pallate", Rect(1200, 200, 1280, 720)); //make our gui wndow
-xfader=Slider(w, Rect(100, 600, 1100, 40)); // make a crossfader, maybt the slider isnt the right thing for a xfader?????
-xfader.action_({xfader.value.postln};);
-
-w.front; // make the window appear
-CmdPeriod.doOnce({w.close}); //closes all on cmd + period
-)
-
-
-/*
-
-*/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 (
 //
 (//evaluate buffer by clicking anywhere inbetWeen the brackets and then repetedly  press Shift + command + b repetedly until everything between the parenthesis is highlighted. Once highlighted press Shift + Enter
@@ -310,7 +270,7 @@ SynthDef(\noise,
 	\sus, 0.5,
 	\rel, 0.1,
 	\pan, 0,
-	\vol, 0.5,
+	\vol, 0.2,
 );
 );
 
@@ -554,14 +514,8 @@ SynthDef(\noise,
 );
 
 //p.clock= TempoClock.default.tempo_(95/60);
-
-
-);
-
 );
 );
-
-
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -575,34 +529,324 @@ SynthDef(\noise,
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-(//beat01
-p.clock=TempoClock.default.tempo_(80/60);
-~beat_01 = Ppar([Pseq([~kik_01]), Pseq([~sn_01]), Pseq([~hat_01])],8).play;
+
+
+
+(
+(
+//beat_01
+//p.clock=TempoClock.default.tempo_(80/60);
+Ndef(\beat_01,
+ Ppar([Pseq([~kik_01]), Pseq([~sn_01]), Pseq([~hat_01])],inf))
 );
 (//beat02
-p.clock=TempoClock.default.tempo_(75/60);
-~beat_02 = Ppar([Pseq([~kik_02]), Pseq([~sn_02]), Pseq([~hat_02, ~hat_02_2])],8).play;
+//p.clock=TempoClock.default.tempo_(75/60);
+Ndef(\beat_02,
+Ppar([Pseq([~kik_02]), Pseq([~sn_02]), Pseq([~hat_02, ~hat_02_2])],inf);
+);
 );
 (//beat03
-p.clock=TempoClock.default.tempo_(70/60);
-~beat_03 = Ppar([Pseq([~kik_03]), Pseq([~sn_03]), Pseq([~bazz_03])],4).play;
+//p.clock=TempoClock.default.tempo_(70/60)
+Ndef(\beat_03,
+Ppar([Pseq([~kik_03]), Pseq([~sn_03]), Pseq([~bazz_03])],inf);
+);
 );
 (//beat04
-p.clock=TempoClock.default.tempo_(57/60);
-~beat_04=Ppar([Pseq([~kik_04]), Pseq([~sn_04]), Pseq([~hat_04])]).play
-)
+//p.clock=TempoClock.default.tempo_(57/60);
+Ndef(\beat_04,
+Ppar([Pseq([~kik_04]), Pseq([~sn_04]), Pseq([~hat_04])],inf);
+);
+);
 (//beat05
-p.clock=TempoClock.default.tempo_(90/60);
-~beat_05=Ppar([Pseq([~kik_05]), Pseq([~sn_05]), Pseq([~hat_05]), Pseq([~bazz_05])],1).play
-)
+//p.clock=TempoClock.default.tempo_(90/60);
+Ndef(\beat_05,
+Ppar([Pseq([~kik_05]), Pseq([~sn_05]), Pseq([~hat_05]), Pseq([~bazz_05])],inf);
+);
+);
 (//Beat06
-p.clock= TempoClock.default.tempo_(95/60);
-~beat_06=Ppar([Pseq([~kik_06]), Pseq([~sn_06]), Pseq([~hat_06]), Pseq([~ride_06])],2).play
-)
-(//Beat_07
-p.clock=TempoClock.default.tempo_(100/60);
-~beat_07=Ppar([Pseq([~kik_07]), Pseq([~sn_07]), Pseq([~bazz_07])],2).play
+//p.clock= TempoClock.default.tempo_(95/60);
+Ndef(\beat_06,
+Ppar([Pseq([~kik_06]), Pseq([~sn_06]), Pseq([~hat_06]), Pseq([~ride_06])],inf);
+);
+);
 
-)
+(//Beat_07 new code
+//p.clock=TempoClock.default.tempo_(100/60);
+Ndef(\beat_07,
+Ppar([Pseq([~kik_07]), Pseq([~sn_07]), Pseq([~bazz_07])],inf);
+);
+);
+);
+);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                 //////////////  //            //   ///////////////////
+//                //          //   //            //   ///////////////////
+//               //          //    //            //           //
+//              //                 //            //           //
+//             //                  //            //           //
+//            //                   //            //           //
+//            //                   //            //           //
+//            //         //////    //            //           //
+//            //             //     //           //           //
+//             //           //       //         //            //
+//              //         //         //       //             //
+//               //       //           //     //     ////////////////////
+//                /////////             ///////      ////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+( //GUI code
+
+
+//////////////////////////////////////////////////////////////////////////////////
+//               Bugs and features to add??
+////////////////////////////////////////////////////////////////////////////////////
+//                   BUGS
+//  BUG: for some reason it takes a couple of button presses to get the loop to work????
+//  BUG: Tempo clock isnt reacting to being called in the ndef
+/////////////////////////////////////////////////////////////////////////////////////
+//                 Features to add
+// *Visualiser that responds when a loop is pressed
+// *Output meters
+// *Scope
+// * volume faders for parts
+// add in a working quantiser to the Tempo clock so that the loops end on a bar sequence
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+
+var w;
+var id;
+var sz = 123;
+var xfader;
+var beat01, beat02, beat03, beat04, beat05, beat06, beat07, beat08, beat09, beat10;
+
+w = Window("The MC Skooghall Sound n Sight Pallate", Rect(1200, 200, 1280, 720)); //make our gui wndow
+w.view.decorator = FlowLayout(w.view.bounds);
+id = s.nextNodeID;
+
+// add a button
+// code taken and adapted from SuperCollider GUI examples2 (bundled with SuperCollider)
+//"/Users/yourname/Music/SuperCollider/examples/GUI examples/GUI_examples2.scd"
+
+//button1
+beat01 = Button(w, sz@sz);
+//make it start and stop
+beat01.states = [
+	["beat01start", Color.black, Color.blue],
+	["beat01stop", Color.black, Color.magenta],
+];
+//assign action to the buttons
+beat01.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_01).play;
+		p.clock=TempoClock.default.tempo_(80/60);
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_01).free
+};
+};
+
+//button02
+beat02 = Button(w, sz@sz);
+//make it start/stop
+beat02.states = [
+	["beat02start", Color.black, Color.blue],
+	["beat02stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat02.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_02).play;
+		p.clock=TempoClock.default.tempo_(75/60);
+
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_02).free
+	};
+};
+
+//button03
+beat03 = Button(w, sz@sz);
+//make it start/stop
+beat03.states = [
+	["beat03start", Color.black, Color.blue],
+	["beat03stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat03.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_03).play;
+		p.clock=TempoClock.default.tempo_(70/60)
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_03).free
+	};
+};
+
+//button04
+beat04 = Button(w, sz@sz);
+//make it start/stop
+beat04.states = [
+	["beat04start", Color.black, Color.blue],
+	["beat04stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat04.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_04).play;
+		p.clock=TempoClock.default.tempo_(57/60);
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_04).free
+	};
+};
+
+//button05
+beat05 = Button(w, sz@sz);
+//make it start/stop
+beat05.states = [
+	["beat05start", Color.black, Color.blue],
+	["beat05stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat05.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_05).play;
+		p.clock=TempoClock.default.tempo_(90/60);
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_05).free
+	};
+};
+
+//button06
+beat06 = Button(w, sz@sz);
+//make it start/stop
+beat06.states = [
+	["beat06start", Color.black, Color.blue],
+	["beat06stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat06.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_06).play;
+		p.clock= TempoClock.default.tempo_(95/60);
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_06).free
+	};
+};
+
+//button07
+beat07 = Button(w, sz@sz);
+//make it start/stop
+beat07.states = [
+	["beat07start", Color.black, Color.blue],
+	["beat07stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat07.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_07).play;
+		p.clock=TempoClock.default.tempo_(100/60);
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_07).free
+	};
+};
+//button08
+beat08 = Button(w, sz@sz);
+//make it start/stop
+beat08.states = [
+	["beat08start", Color.black, Color.blue],
+	["beat08stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat08.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_08).play;
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_08).free
+	};
+};
+
+//button09
+beat09 = Button(w, sz@sz);
+//make it start/stop
+beat09.states = [
+	["beat09start", Color.black, Color.blue],
+	["beat09stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat09.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_09).play;
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_09).free
+	};
+};
+
+//button10
+beat10 = Button(w, sz@sz);
+//make it start/stop
+beat10.states = [
+	["beat10start", Color.black, Color.blue],
+	["beat10stop", Color.black, Color.magenta],
+];
+// assign action to the buttons
+beat10.action = {|view|
+	if(view.value == 1){
+		//start loop
+		Ndef(\beat_10).play;
+	};
+	if(view.value == 0){
+		//stop loop
+		Ndef(\beat_10).free
+	};
+};
+
+
+//Add xfade
+xfader=Slider(w, Rect(100, 600, 1100, 40)); // make a crossfader, maybt the slider isnt the right thing for a xfader?????
+xfader.action_({xfader.value.postln};);
+
+
+
+w.front; // make the window appear
+CmdPeriod.doOnce({w.close}); //closes all on cmd + period
+
+
+);
+);
+);
+
+
+
+
+
+
+
 s.record
 s.stopRecording
