@@ -647,16 +647,17 @@ beat01.action = {|view|
 	if(view.value == 1){
 		//start loop
 		Ndef(\beat_01).play;
-		p.clock=TempoClock.default.tempo_(80/60);
+		p.clock=TempoClock.default.tempo_(80/60); //tempoclock code
+
 		(//open a visualizer whn button pressed
-			{
+
 				win = Window("beat01 viz", Rect(1080, 10, width, height), false);
 				win.front;
 			usr = UserView(win,Rect(0, 0, width, height));
 			usr.background = Color.rand;
 
 
-			};
+
 
 
 		)
@@ -683,7 +684,7 @@ beat02.action = {|view|
 	if(view.value == 1){
 		//start loop
 		Ndef(\beat_02).play;
-		p.clock=TempoClock.default.tempo_(75/60);
+		p.clock=TempoClock.default.tempo_(75/60); //tempoclock code
 
 	};
 	if(view.value == 0){
@@ -704,7 +705,8 @@ beat03.action = {|view|
 	if(view.value == 1){
 		//start loop
 		Ndef(\beat_03).play;
-		p.clock=TempoClock.default.tempo_(70/60)
+		p.clock=TempoClock.default.tempo_(70/60); //tempoclock code
+
 	};
 	if(view.value == 0){
 		//stop loop
@@ -724,7 +726,8 @@ beat04.action = {|view|
 	if(view.value == 1){
 		//start loop
 		Ndef(\beat_04).play;
-		p.clock=TempoClock.default.tempo_(57/60);
+		p.clock=TempoClock.default.tempo_(57/60); //tempoclock code
+
 
 	};
 	if(view.value == 0){
@@ -745,7 +748,8 @@ beat05.action = {|view|
 	if(view.value == 1){
 		//start loop
 		Ndef(\beat_05).play;
-		p.clock=TempoClock.default.tempo_(90/60);
+		p.clock=TempoClock.default.tempo_(90/60); //tempoclock code
+
 	};
 	if(view.value == 0){
 		//stop loop
@@ -765,7 +769,8 @@ beat06.action = {|view|
 	if(view.value == 1){
 		//start loop
 		Ndef(\beat_06).play;
-		p.clock= TempoClock.default.tempo_(95/60);
+		p.clock= TempoClock.default.tempo_(95/60); //tempoclock code
+
 	};
 	if(view.value == 0){
 		//stop loop
@@ -785,7 +790,8 @@ beat07.action = {|view|
 	if(view.value == 1){
 		//start loop
 		Ndef(\beat_07).play;
-		p.clock=TempoClock.default.tempo_(100/60);
+		p.clock=TempoClock.default.tempo_(100/60); //tempoclock code
+
 	};
 	if(view.value == 0){
 		//stop loop
