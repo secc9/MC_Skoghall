@@ -595,8 +595,9 @@ Ppar([Pseq([~kik_07]), Pseq([~sn_07]), Pseq([~bazz_07])],inf);
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-( //GUI code
 
+
+//GUI code
 
 //////////////////////////////////////////////////////////////////////////////////
 //               Bugs and features to add??
@@ -615,6 +616,34 @@ Ppar([Pseq([~kik_07]), Pseq([~sn_07]), Pseq([~bazz_07])],inf);
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 
+(
+(
+OSCdef.new(
+	\beat01_toggle, {
+		arg msg, time, addr, port;
+		Ndef(\beat_01).play;
+		//Ndef(\beat_01).free;
+		msg[1].postln;
+	},
+	'/beat01'
+);
+);
+(
+OSCdef.new(
+	\beat01_toggle, {
+		arg msg, time, addr, port;
+		//Ndef(\beat_01).play;
+		Ndef(\beat_01).free;
+		msg[1].postln;
+	},
+	'/beat01'
+);
+);
+)
+
+
+Ndef(\beat_01).play
+(
 var w;
 var id;
 var sz = 123;
@@ -625,9 +654,31 @@ var usr;
 //var win = Window("beat01 viz", Rect(10, 10, width, height), false);
 var xfader, scope, freqScope;
 var beat01, beat02, beat03, beat04, beat05, beat06, beat07, beat08, beat09, beat10;
-w = Window("The MC Skooghall Sound n Sight Pallate", Rect(1200, 200, 1280, 720)); //make our gui wndow
+w = Window("The MC Skooghall Sound n Sight Pallate", Rect(100, 200, 1280, 720)); //make our gui wndow
 w.view.decorator = FlowLayout(w.view.bounds);
 id = s.nextNodeID;
+
+
+
+
+////////////////////////////////////
+//OSC
+////////////////////////////////////
+
+
+/*
+OSC
+*/
+
+NetAddr.langPort; //57120
+
+// x = beat01;
+// x = beat01;
+
+
+//OSCFunc.trace(true);
+//OSCFunc.(\beat01, {|msg| "Received: " + msg.postln}, '/beat01');
+
 
 // add a button
 // code taken and adapted from SuperCollider GUI examples2 (bundled with SuperCollider)
@@ -651,6 +702,7 @@ insert into the 1 if statment below the p.clock line of code
 win.close; // insert this line into the 0 if statement below the Ndef.free
 
 */
+//OSCFunc.(\beat01, {|msg| "Received: " + msg.postln}, '/beat01');
 
 //button1
 beat01 = Button(w, sz@sz);
@@ -672,6 +724,10 @@ beat01.action = {|view|
 		usr = UserView(win,Rect(0, 0, width, height));
 		usr.background = Color.rand;
 			usr.drawFunc={
+				Pen.fillColor = Color.rand;
+				Pen.fillOval(Rect(100, 100, 600, 600));
+				Pen.fillColor = Color.rand;
+				Pen.fillOval(Rect(600, 300, 500, 500));
 
 			}
 
@@ -685,6 +741,7 @@ beat01.action = {|view|
 		win.close; //close visualiser window
 };
 };
+
 
 //button02
 beat02 = Button(w, sz@sz);
